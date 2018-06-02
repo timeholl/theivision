@@ -46,7 +46,12 @@
           "key":"string"
         },
         "description":"Example of function in query."
-      }
+      },
+      { 
+          "method":"get_user_contracts", 
+          "params":{"tx_hash":"user_id"}, 
+          "description":"Issue Certificate" 
+      }    
     ]
   },
   "main":"theivision"
