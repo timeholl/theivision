@@ -2,12 +2,12 @@
   "id":"theivision",
   "version":"1.0.0",
   "auth":{
-    "name":"YOUR_TEAM_NAME",
-    "email":"YOUR_TEAM_EMAIL",
-    "org":"YOUR_ORGANIZATION"
+    "name":"TheIVision",
+    "email":"dev@theivision.com",
+    "org":"TheIVision"
   },
   "dependencies":{},
-  "description":"YOUR_OWN_DESCRIPTION",
+  "description":"LoopChain Program",
   "repository":{},
   "homepage":"http://www.theloop.co.kr",
   "function":{
@@ -19,7 +19,25 @@
           "value":"string"
         },
         "description":"Example of function in invoke."
-      }
+      },
+      {
+        "method":"purpose",
+        "params": {
+          "proposer":"propose_user_id",
+          "counterparties":[],
+          "content":"contract text",
+          "quorum":"(int)quorum"    
+        },
+        "description":"new member"
+      },
+      { 
+          "method":"approve", 
+          "params":{ 
+              "user_id":"string" , 
+              "contract_id":"string" 
+          } 
+       } 
+  
     ],
     "query":[
       {

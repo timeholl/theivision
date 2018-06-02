@@ -80,6 +80,39 @@ class SCOREBusinessLogic:
         return SCOREResponse.succeed()
 
     # TODO: Add your function for invoke operation.
+    def propose(self, params):
+        params[self.APPROVERS] = [params[self.PROPOSER]]
+        logging.debug(self.LOG_PREFIX + str(params))
+        new_index = self.__get_last_index() + 1
+        input_contract = json.dumps(params)
+        self.__contract_db.Put(new_index, input_contract)
+        self.__contract_db.Put(self.LAST_INDEX_KEY, new_index)
+        for counterpart in params[self.COUNTERPARTIES]:
+            counterpart_contracts = self.__user_db.Get(counterpart)
+            if counterpart_contracts is None:
+                counterpart_contracts = "[]"
+            contract_list = json.loads(counterpart_contracts)
+            contract_list.append(new_index)
+            input_contract_list = json.dumps(contract_list)
+            self.__user_db.Put(counterpart, input_contract_list)
+         return {'code':0}   
+    
+    def approve(self,params)
+        contract_id = params[self.CONTRACT_ID]
+        approve_user = params[self.USER_ID]
+        contract_str = self.__contract_db.Get(contract_id)
+        contract = json.loads(contract_str, encoding=self.DB_ENCODING)
+        if approve_user in contract[self.COUNTERPARTIES]:
+            if approve_user not in contract[self.APPROVERS]:
+                contract[self.APPROVERS].append(approve_user)
+                input_contract = json.dumps(contract)
+                self.__contract_db.Put(contract_id, input_contract)
+                return {'code':0}
+            else:
+                raise Exception('previous approve user' + approve_user)
+        else:
+             raise Exception('this user is not in counterparties')
+            
 
     def query_foo1(self, log_func, id, params):
         """Query example function. USE AS REFERENCE. KEEP THIS FUNCTION ARGUMENTS IN YOUR OWN FUNCTIONS.
